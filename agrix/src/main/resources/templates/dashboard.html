@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Smart Irrigation- Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="navbar">
+    <div class="logo">🌱 <span style="font-family: caveat;">Agri</span><span style="color:green">X</span></div>
+    <div>
+      <a href="index">Home</a>
+      <a href="dashboard">Dashboard</a>
+      <a href="history">History</a>
+      <a href="#" onclick="logout()">Logout</a>
+     
+<script>
+  function logout() {
+    localStorage.removeItem("loggedInUser");
+    window.location.href = "login";
+  }
+</script>
+
+      
+    </div>
+    
+  </div>
+
+  <h2 style="text-align:center; padding:20px;">Dashboard</h2>
+
+  <div class="dashboard">
+    <div class="card">
+      <h3>🌱 Soil Moisture</h3>
+      <p id="moisture">Loading...</p>
+      <h3>Irrigation Status: <span id="irrigationStatus">Loading...</span></h3>
+    </div>
+    <div class="card">
+      <h3>🌍 Weather</h3>
+      <p id="weather">Loading...</p>
+    </div>
+    <div class="card">
+      <h3>💧 Water Usage</h3>
+      <p id="water">Loading...</p>
+    </div>
+    <div class="card">
+      <h3>⚡ Electricity Usage</h3>
+      <p id="electricity">Loading...</p>
+    </div>
+  </div>
+<script>
+
+async function updateSoilStatus() {
+  try {
+    // ✅ Make sure URL matches your backend
+    let res = await fetch("http://localhost:8080/soil/moisture");
+    
+    if (!res.ok) {
+      console.error("Soil API error:", res.status);
+      document.getElementById('moisture').innerText = "Error";
+      document.getElementById('irrigationStatus').innerText = "Error";
+      return;
+    }
+
+    let data = await res.json();
+
+    // Display moisture & irrigation
+    document.getElementById('moisture').innerText = data.value + "%";
+    document.getElementById('irrigationStatus').innerText = data.status;
+  } catch (err) {
+    console.error(err);
+    document.getElementById('moisture').innerText = "Error";
+    document.getElementById('irrigationStatus').innerText = "Error";
+  }
+}
+
+// Run every 3 seconds
+setInterval(updateSoilStatus, 3000);
+updateSoilStatus();
+
+
+// Fetch weather using city from latest setting in database
+
+async function updateWeather() {
+  try {
+    // 1️⃣ Get the latest settings from backend
+    let resSettings = await fetch("http://localhost:8080/soil/settings");
+    let settings = await resSettings.json();
+
+    // Fallback if no city in DB
+    let city = settings.city || "Chennai";
+
+    // 2️⃣ Fetch weather using the city
+    let resWeather = await fetch("http://localhost:8080/weather?city=" + encodeURIComponent(city));
+    if (!resWeather.ok) {
+      console.error("Weather API error:", resWeather.status);
+      document.getElementById("weather").innerText = "Error loading weather";
+      return;
+    }
+
+    let data = await resWeather.json();
+
+    // 3️⃣ Update dashboard
+    document.getElementById("weather").innerText = data.temperature + "°C, " + data.condition;
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById("weather").innerText = "Error loading weather";
+  }
+}
+
+// Update every 10 minutes (or however often you want)
+updateWeather();
+setInterval(updateWeather, 600000);
+
+
+
+// Placeholder water usage (replace with your API)
+fetch("http://localhost:8080/currentUsage")
+.then(res => res.json())
+.then(data => document.getElementById("water").innerText = data.usage + " Liters")
+.catch(err => console.error(err));
+
+// Placeholder electricity usage (replace with your API)
+fetch("http://localhost:8080/currentElectricity")
+.then(res => res.json())
+.then(data => document.getElementById("electricity").innerText = data.usage + " kWh")
+.catch(err => console.error(err));
+
+
+// Auto-save Neellu logs every 1 minute
+async function autoSaveNeelluLog() {
+    try {
+        const res = await fetch("http://localhost:8080/neellu/save", {
+            method: "GET",
+            credentials: "include" // ensures session info is sent
+        });
+        const data = await res.json();
+        console.log("Neellu log saved:", data.message);
+    } catch (err) {
+        console.error("Error saving Neellu log:", err);
+    }
+}
+
+// Call immediately once, then every 60 seconds
+autoSaveNeelluLog();
+setInterval(autoSaveNeelluLog, 60000);
+
+
+
+</script>
+
+<!-- Notification Icon -->
+<div id="notificationIcon" class="notification-icon" title="Notifications">
+  🔔
+</div>
+
+<!-- Notification Bar (hidden initially) -->
+<div id="notificationBar" class="notification-bar" style="display:none;">
+  Loading notifications...
+</div>
+<style>
+
+  .notification-icon {
+  position: fixed;
+  top: 70px;       /* adjust based on navbar height */
+  right: 20px;
+  background: #f39c12;
+  color: white;
+  font-size: 24px;
+  padding: 10px 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  z-index: 1002;
+}
+
+.notification-bar {
+  position: fixed;
+  top: 110px;      /* just below icon */
+  right: 20px;
+  width: 320px;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color:green;
+  color: white;
+  padding: 15px;
+  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  z-index: 1001;
+  cursor: default;
+  transition: opacity 0.3s ease;
+  display: none;   /* initially hidden */
+}
+
+</style>
+<script>
+  // Toggle notification bar visibility on icon click
+  document.getElementById('notificationIcon').addEventListener('click', () => {
+    const bar = document.getElementById('notificationBar');
+    bar.style.display = (bar.style.display === 'none' || bar.style.display === '') ? 'block' : 'none';
+  });
+
+  // Fetch and update notifications dynamically
+  async function loadNotifications() {
+    try {
+      // Call your existing SoilController API
+      let res = await fetch('http://localhost:8080/soil/moisture');
+      let data = await res.json();
+
+      let bar = document.getElementById('notificationBar');
+      let messages = [];
+
+      const moisture = data.value;
+
+      if (moisture < 15) {
+        messages.push("⚠️ Soil moisture is low! Consider irrigating.");
+      } else if (moisture >= 15 && moisture <= 60) {
+        messages.push("🌱 Soil moisture is normal.");
+      } else if (moisture > 60) {
+        messages.push("💦 Soil moisture is high!");
+      }
+
+      bar.innerHTML = messages.join('<br>');
+
+    } catch (err) {
+      console.error('Failed to load notifications:', err);
+    }
+  }
+
+  // Load notifications on page load and refresh every 10 seconds
+  window.onload = () => {
+    loadNotifications();
+    setInterval(loadNotifications, 10000); // refresh every 10 sec
+  };
+</script>
+
+<style>
+   .navbar {
+  position: fixed;   /* keeps navbar fixed */
+  top: 0;            /* stick to top */
+  left: 0;
+  width: 97.4%;       /* full width */
+  z-index: 1000; /* stay above other elements */
+  
+}
+body {
+  margin: 0;
+  padding-top: 60px; /* adjust this to the height of your navbar */
+}
+</style>
+
+
+
+</body>
+</html>

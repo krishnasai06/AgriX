@@ -1,0 +1,11 @@
+com\agrix\agrix\controller\SignupController.class
+com\agrix\agrix\controller\WaterController.class
+com\agrix\agrix\AgrixApplication.class
+com\agrix\agrix\controller\UserRepository.class
+com\agrix\agrix\controller\ElectricityController.class
+com\agrix\agrix\controller\SoilController.class
+com\agrix\agrix\controller\NeelluController.class
+com\agrix\agrix\model\User.class
+com\agrix\agrix\controller\WeatherController.class
+com\agrix\agrix\controller\LoginController.class
+com\agrix\agrix\controller\PageController.class

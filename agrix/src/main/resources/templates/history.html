@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Irrigation - History</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    table, th, td {
+      border: 1px solid #2c3e50;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background: #2c3e50;
+      color: white;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 97.4%;
+      z-index: 1000;
+    }
+    body {
+      margin: 0;
+      padding-top: 60px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="navbar">
+      <div class="logo">🌱 <span style="font-family:caveat;">Agri</span><span style="color:green">X</span></div>
+      <div>
+        <a href="index">Home</a>
+        <a href="dashboard">Dashboard</a>
+        <a href="history">History</a>
+        <a href="#" onclick="logout()">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <h2 style="text-align:center; padding:20px;">Irrigation History</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>City</th>
+        <th>Moisture (%)</th>
+        <th>Watering Status</th>
+        <th>Water Used (L)</th>
+        <th>Electricity Used (kWh)</th>
+      </tr>
+    </thead>
+    <tbody id="irrigationLogTableBody">
+      <tr><td colspan="7">Loading...</td></tr>
+    </tbody>
+  </table>
+<script>
+async function loadHistory() {
+  try {
+    // ✅ 1️⃣ Get currently logged-in user from backend
+    const userRes = await fetch("http://localhost:8080/api/currentUser", {
+      credentials: "include"
+    });
+
+    const username = await userRes.text();
+    const tbody = document.getElementById("irrigationLogTableBody");
+    tbody.innerHTML = "";
+
+    if (!username) {
+      tbody.innerHTML = `<tr><td colspan="7">⚠️ Please log in first</td></tr>`;
+      return;
+    }
+
+    // ✅ 2️⃣ Fetch all history logs for the user
+    const historyRes = await fetch("http://localhost:8080/neelluLog", {
+      credentials: "include"
+    });
+
+    if (!historyRes.ok) {
+      tbody.innerHTML = `<tr><td colspan="7">❌ Failed to load history</td></tr>`;
+      return;
+    }
+
+    const records = await historyRes.json();
+
+    if (!records || records.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7">No irrigation records found for <b>${username}</b></td></tr>`;
+      return;
+    }
+
+    // ✅ 3️⃣ Populate table
+    records.forEach((r) => {
+      const row = `
+        <tr>
+          <td>${r.date || "-"}</td>
+          <td>${r.time ? r.time.split(".")[0] : "-"}</td>
+          <td>${r.city || "N/A"}</td>
+          <td>${r.moisture != null ? r.moisture + "%" : "-"}</td>
+          <td>${r.status || "-"}</td>
+          <td>${r.waterUsed != null ? r.waterUsed + " L" : "-"}</td>
+          <td>${r.electricityUsed != null ? r.electricityUsed + " kWh" : "-"}</td>
+        </tr>`;
+      tbody.innerHTML += row;
+    });
+  } catch (err) {
+    console.error("Error loading history:", err);
+    document.getElementById("irrigationLogTableBody").innerHTML =
+      `<tr><td colspan="7">⚠️ Error loading data</td></tr>`;
+  }
+}
+
+// ✅ Logout function
+function logout() {
+  fetch("http://localhost:8080/logout", { method: "GET", credentials: "include" })
+    .then(() => window.location.href = "login")
+    .catch(() => window.location.href = "login");
+}
+
+// ✅ Run on page load
+loadHistory();
+// Refresh history table every 10 seconds
+setInterval(loadHistory, 10000);
+
+</script>
+
+
+
+</body>
+</html>

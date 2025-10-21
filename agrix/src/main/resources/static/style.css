@@ -1,0 +1,361 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f8f9fa;
+  
+  
+  
+}
+
+.navbar {
+background: linear-gradient(90deg, #00b09b, #96c93d);
+
+ 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  
+
+}
+.navbar a {
+  color: white;
+  text-decoration:none;
+  padding: 10px 15px;
+  transition: background 0.3s;
+}
+.navbar a:hover {
+  background-color: #1abc9c;
+  border-radius: 5px;
+}
+.navbar .logo {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ecf0f1;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column; /* stack items in rows */
+  gap: 20px;              /* spacing between rows */
+  max-width: 800px;       /* center nicely */
+  margin: 20px auto;
+  padding: 10px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.5s ease;
+  text-decoration: none;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+.details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  background: #f9f9f9;
+  margin-top: 10px;
+  border-left: 4px solid #1abc9c;
+  padding: 0 15px;
+  border-radius: 6px;
+}
+
+.details.open {
+  max-height: 500px; /* adjust based on content */
+  padding: 15px;
+}
+
+.card {
+  cursor: pointer;
+}
+.details {
+  max-height: 0;
+  overflow: hidden;
+  background: #f9f9f9;
+  border-radius: 10px;
+  margin-top: 15px;
+  transition: max-height 0.5s ease, padding 0.3s ease;
+  padding: 0 15px; /* collapsed padding */
+}
+
+.details.open {
+  max-height: 500px;   /* space when opened */
+  padding: 20px 15px;  /* expanded padding */
+}
+body {
+  min-height: 1200vh;  /* makes page taller than the screen */
+}
+
+.dashboard {
+  padding-bottom: 100px; /* extra space at bottom */
+}
+.modify {
+    padding-right: 40px;
+}
+
+.services{
+  text-align: center;
+   background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+ 
+  cursor: pointer;
+   display: grid;
+     
+      gap: 0px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+       font-family: "Segoe UI", sans-serif;
+  
+}
+
+.newservice{
+  text-align: center;
+   
+   background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+ 
+  cursor: pointer;
+   display: grid;
+     
+      gap: 0px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+       font-family: "Segoe UI", sans-serif;
+}
+.services3{
+  text-align:center ;
+   
+   background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+ 
+  cursor: pointer;
+   display: grid;
+     
+      gap: 0px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+       font-family: "Segoe UI", sans-serif;
+}
+
+.services4{
+  text-align: center;
+  
+   background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+ 
+  cursor: pointer;
+   display: grid;
+     
+      gap: 0px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+       font-family: "Segoe UI", sans-serif;
+}
+.heading{
+  color: #1abc9c;
+      margin-bottom: 10px;
+}
+
+  .services {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  border-left: 6px solid #00bcd4;
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.services:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0,0,0,0.15);
+}
+
+.services .heading {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #00796b;
+}
+
+.services p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.services p:first-of-type {
+  font-weight: 600;
+  margin-top: 10px;
+  color: #444;
+}
+
+
+ .newservice {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  border-left: 6px solid #00bcd4;
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.newservice:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0,0,0,0.15);
+}
+
+.newservice .heading {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #00796b;
+}
+
+.newservice p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.newservice p:first-of-type {
+  font-weight: 600;
+  margin-top: 10px;
+  color: #444;
+}
+
+
+  .services3 {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  border-left: 6px solid #00bcd4;
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.services3:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0,0,0,0.15);
+}
+
+.services3 .heading {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #00796b;
+}
+
+.services3 p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.services3 p:first-of-type {
+  font-weight: 600;
+  margin-top: 10px;
+  color: #444;
+}
+
+
+  .services4 {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  border-left: 6px solid #00bcd4;
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.services4:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0,0,0,0.15);
+}
+
+.services4 .heading {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #00796b;
+}
+
+.services4 p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.services4 p:first-of-type {
+  font-weight: 600;
+  margin-top: 10px;
+  color: #444;
+}
+.irrigation-controls {
+  margin-top: 20px;
+}
+
+.irrigation-controls button {
+  background-color: #2b9348;
+  border: none;
+  color: white;
+  padding: 10px 25px;
+  margin: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+.irrigation-controls button:hover {
+  background-color: #208638;
+  transform: scale(1.05);
+}
+
+.irrigation-controls button:active {
+  transform: scale(0.97);
+}
+
+
+
+
+
+
+
+
+
+
+

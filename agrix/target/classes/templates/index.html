@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Smart Irrigation- Home</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
+      border-bottom:100px;
+    }
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .hero h1 {
+      font-size: 2.5em;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+    .hero p {
+      font-size: 1.2em;
+      color: #555;
+      margin-bottom: 30px;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+      text-align: center;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card h2 {
+      color: #1abc9c;
+      margin-bottom: 10px;
+    }
+    .card p {
+      color: #555;
+      line-height: 1.5;
+    }
+    .btn-container {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .btn {
+      background: #1abc9c;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #16a085;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="logo">🌱 <span style="font-family: caveat;">Agri</span><span style="color:green">X</span></div>
+    <div class="modify">
+      <a href="index">Home</a>
+      <a href="dashboard">Dashboard</a>
+      <a href="history">History</a>
+      <a href="#" onclick="logout()">Logout</a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1>Welcome to <span style="font-family: caveat;">Agri</span><span style="color:green">X</span></h1>
+    <p>Efficiently monitor, control, and optimize water usage for your crops — anytime, anywhere.</p>
+  </div>
+
+  <!-- Feature Cards -->
+  <div class="features">
+    <div class="card">
+      <h2>💧 Real-Time Monitoring</h2>
+      <p>Check soil moisture instantly and know when your crops need water.</p>
+      <a href="#services">ℹ️</a>
+     
+    </div>
+    <div class="card">
+      <h2>📊 Usage Tracking</h2>
+      <p>Keep an eye on water consumption and motor electricity usage with detailed reports.</p>
+      <a href="#newservices" >ℹ️</a>
+    </div>
+    <div class="card">
+      <h2>⏱️ Automated Control</h2>
+      <p>Set thresholds and let the system water your <br>plants automatically.</p>
+      <a href="#services3">ℹ️</a>
+    </div>
+    <div class="card">
+      <h2>📜 History Logs</h2>
+      <p>View your past irrigation records and analyze performance over time.</p>
+      <a  href="#services4">ℹ️</a>
+    </div>
+  </div>
+  
+
+  <!-- CTA -->
+  <div class="btn-container">
+    <a href="dashboard" class="btn">Go to Dashboard →</a>
+  </div>
+
+ 
+  
+<!-- Smart Irrigation Settings Section -->
+<div class="settings-container">
+  <h2>🌱 Smart Irrigation Setup</h2>
+
+  <form id="settingsForm">
+    <!-- City -->
+    <label for="city">City Name:</label>
+    <select id="city" name="city" required>
+      <option value="">Select City</option>
+      <option value="Amaravathi">Amaravathi</option>
+      <option value="Bhimavarm">Bhimavaram</option>
+      <option value="Chittor">Chittor</option>
+      <option value="Gudivada">Gudivada</option>
+      <option value="Rajahmundry">Rajhamundry</option>
+      <option value="Vishakapatanam">Vishakapatanam</option>
+      <option value="Guntur">Guntur</option>
+      <option value="Kurnool">Kurnool</option>
+      <option value="Kadapa">Kadapa</option>
+      <option value="Nandiyala">Nandiyala</option>
+      <option value="Ongole">Ongole</option>
+      <option value="Tirupathi">Tirupathi</option>
+      <option value="Chennai">Chennai</option>
+      <option value="Bangalore">Bangalore</option>
+      <option value="Bhopal">Bhopal</option>
+      <option value="Thiruvanathapuram">Thiruvanathapuram</option>
+      <option value="Pune">Pune</option>
+      <option value="Warangal">Warangal</option>
+    </select>
+
+    <!-- Soil Type -->
+    <label for="soilType">Soil Type:</label>
+    <select id="soilType" name="soilType" required>
+      <option value="">Select Soil Type</option>
+      <option value="clay">Clay</option>
+      <option value="sandy">Sandy</option>
+      <option value="loam">Loam</option>
+      <option value="silt">Silt</option>
+      <option value="peaty">Peaty</option>
+    </select>
+    
+    <!-- Moisture Threshold -->
+    <label for="threshold">Moisture Threshold (%):</label>
+    <input type="number" id="threshold" name="threshold" min="0" max="100" placeholder="e.g., 40" required />
+
+    <button type="submit">Save Settings</button>
+  </form>
+
+  <p id="recommendedRange" style="color: green; font-weight: bold; margin-top: 10px;"></p>
+</div>
+<script>
+window.addEventListener("load", () => {
+  // Load saved settings when page loads
+  fetch("http://localhost:8080/soil/settings")
+    .then(response => response.json())
+    .then(data => {
+      if (data && data.city) {
+        document.getElementById("city").value = data.city;
+        document.getElementById("soilType").value = data.soilType;
+        document.getElementById("threshold").value = data.threshold;
+      }
+    })
+    .catch(err => console.error("Error loading settings:", err));
+
+  // Attach submit event
+  document.getElementById("settingsForm").addEventListener("submit", function (event) {
+    event.preventDefault(); // Stop form reload
+
+    const city = document.getElementById("city").value;
+    const soilType = document.getElementById("soilType").value;
+    const threshold = document.getElementById("threshold").value;
+
+    // ✅ Ensure data is sent as form-encoded
+    fetch("http://localhost:8080/soil/saveSettings", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `city=${encodeURIComponent(city)}&soilType=${encodeURIComponent(soilType)}&threshold=${encodeURIComponent(threshold)}`
+    })
+      .then(res => res.json())
+      .then(data => alert(data.message))
+      .catch(err => console.error("Error saving settings:", err));
+  });
+});
+</script>
+
+<script>
+  const soilTypeSelect = document.getElementById("soilType");
+  const recommendedRange = document.getElementById("recommendedRange");
+
+  soilTypeSelect.addEventListener("change", function () {
+    let soil = soilTypeSelect.value;
+    if (soil === "sandy") {
+      recommendedRange.textContent = "Recommended: 10% – 20% moisture";
+    } else if (soil === "clay") {
+      recommendedRange.textContent = "Recommended: 40% – 50% moisture";
+    } else if (soil === "loam") {
+      recommendedRange.textContent = "Recommended: 20% – 30% moisture";
+    }else if (soil === "silt") {
+      recommendedRange.textContent = "Recommended: 20% – 30% moisture"; 
+    }else if (soil === "peaty") {
+      recommendedRange.textContent = "Recommended: 50% – 70% moisture"; 
+    }else {
+      recommendedRange.textContent = "";
+    }
+  });
+  function logout() {
+  fetch("http://localhost:8080/logout", { method: "GET", credentials: "include" })
+    .then(() => window.location.href = "login")
+    .catch(() => window.location.href = "login");
+}
+
+
+</script>
+
+
+
+
+
+<style>
+    .navbar {
+  position: fixed;   /* keeps navbar fixed */
+  top: 0;            /* stick to top */
+  left: 0;
+  width: 100%;       /* full width */
+  z-index: 1000; /* stay above other elements */
+  
+}
+body {
+  margin: 0;
+  padding-top: 60px; /* adjust this to the height of your navbar */
+}
+
+    /* Page border */
+body {
+   /* Thicker border */
+  margin: 20px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Center form container */
+.settings-container {
+  max-width: 400px;
+  margin: 0 auto;  /* centers horizontally */
+  text-align: center;
+  padding: 20px;
+  border: 2px solid #E0F7F1;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+  background-color:  #E0F7F1;
+}
+
+/* Inputs stacked */
+.settings-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* space between elements */
+}
+
+/* Inputs and button styling */
+.settings-container input,
+.settings-container select,
+.settings-container button {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1.5px solid #555;
+}
+
+.settings-container button {
+  background: #3498db;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.settings-container button:hover {
+  background: #2980b9;
+}
+
+</style>
+<script>
+    document.getElementById("settingsForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  let city = document.getElementById("city").value;
+  let soilType = document.getElementById("soilType").value;
+  let threshold = document.getElementById("threshold").value;
+
+  // For now show confirmation
+  alert(`Settings Saved:\nCity: ${city}\nSoil Type: ${soilType}\nThreshold: ${threshold}%`);
+
+  // Later: send to backend
+  // fetch("/api/settings", {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify({ city, soilType, threshold })
+  // });
+});
+
+</script>
+
+<br>
+<br>
+<br>
+<div class="services"  id="services">-
+
+
+  <h1 class="heading"> 💧 REAL TIME- MONITORING</h1>
+  <p>How It Works:</p>
+
+<p>Sensors in the Soil:</p>
+<p>Special moisture sensors are installed at the root level of your crops. These can measure how wet or dry the soil is.</p>
+
+<p>Wireless Data Transmission:</p>
+<p>The sensor sends this information wirelessly (via Wi-Fi, Bluetooth, or cellular networks) to a cloud platform or a local device.</p>
+
+<p>Real-Time Alerts:</p>
+<p>If the soil gets too dry or too wet, the system can notify you instantly via SMS, app notification, or email.</p>
+
+<p>Mobile Dashboard:</p>
+<p>You can view real-time charts and data trends over days or weeks, helping you decide exactly when to water.</p>
+</div>
+<br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+<div class="newservice" id="newservices">
+
+  <h1 class="heading"> 📊 USAGE TRACKING</h1>
+<p>How It Works:</p>
+
+<p>Water Flow Sensors:</p>
+<p>Devices installed in your water pipeline measure the volume of water flowing to your crops in real-time.</p>
+
+<p>Electricity Meters:</p>
+<p>These track the energy consumed by motors or pumps powering your irrigation, helping you monitor power usage.</p>
+
+<p>Data Logging:</p>
+<p>All data is recorded and stored for daily, weekly, or monthly analysis.</p>
+
+<p>Reports & Alerts:</p>
+<p>You get detailed reports on water and electricity usage, which help identify inefficiencies, leaks, or unusual consumption patterns.</p>
+</div>
+<br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="services3" id="services3">
+    <h1 class="heading"> ⏱️AUTOMATED CONTROL</h1>
+    <p>Set it and forget it – your plants will thank you!</p>
+
+<p>Automated plant watering systems make plant care effortless. With smart control features, you can set specific moisture thresholds for your soil. Once the moisture level drops below your desired limit, the system automatically activates to water your plants — ensuring they get the right amount of water, exactly when they need it.</p>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="services4" id="services4">
+    <h1 class="heading"> 📜 HISTORY LOGS</h1>
+    
+    <p>Track, review, and improve your watering strategy.</p>
+<p>With the History Logs feature, you can view detailed records of all past irrigation events, helping you understand how and when your plants were watered. This data-driven approach allows you to analyze system performance over time, optimize water usage, and ensure your plants are getting consistent care.</p>
+  </div>
+  <br>
+  <br>
+  <div class="pot">
+  <img src="">
+</div>
+<style>
+.pot{
+ align-items: center;
+ padding-left: 650px;
+ padding-top: 150px;
+}
+
+</style>
+<style>
+  .services {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  border-left: 6px solid #00bcd4;
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.services:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0,0,0,0.15);
+}
+
+.services .heading {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #00796b;
+}
+
+.services p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.services p:first-of-type {
+  font-weight: 600;
+  margin-top: 10px;
+  color: #444;
+}
+
+</style>
+
+<style>
+ .newservice {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  border-left: 6px solid #00bcd4;
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.newservice:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0,0,0,0.15);
+}
+
+.newservice .heading {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #00796b;
+}
+
+.newservice p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.newservice p:first-of-type {
+  font-weight: 600;
+  margin-top: 10px;
+  color: #444;
+}
+
+</style>
+
+<style>
+  .services3 {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  border-left: 6px solid #00bcd4;
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.services3:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0,0,0,0.15);
+}
+
+.services3 .heading {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #00796b;
+}
+
+.services3 p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.services3 p:first-of-type {
+  font-weight: 600;
+  margin-top: 10px;
+  color: #444;
+}
+
+</style>
+
+<style>
+  .services4 {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 15px;
+  border-left: 6px solid #00bcd4;
+  box-shadow: 0px 6px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.services4:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 10px 20px rgba(0,0,0,0.15);
+}
+
+.services4 .heading {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #00796b;
+}
+
+.services4 p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.services4 p:first-of-type {
+  font-weight: 600;
+  margin-top: 10px;
+  color: #444;
+}
+</style>
+
+</body>
+</html>
+
